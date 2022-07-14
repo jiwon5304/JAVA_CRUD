@@ -42,3 +42,26 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+ext {
+    openApiConfigLocation = "$rootDir/src/main/resources/docs".toString()
+}
+
+swaggerSources {
+    def typeMappings = 'URI=URI'
+    def importMappings = 'URI=java.net.URI'
+    javacrud {
+        def apiYaml = "${openApiConfigLocation}/openapi.yml"
+        def configJson = "${openApiConfigLocation}/config.json"
+        inputFile = file(apiYaml)
+        def ignoreFile = file("${openApiConfigLocation}/.openapi-generator-ignore")
+        code {
+            language = 'spring'
+            configFile = file(configJson)
+            rawOptions = ['--ignore-file-override', ignoreFile, '--type-mappings',
+                          typeMappings, '--import-mappings', importMappings] as List<String>
+            components = [models: true, apis: true, supportingFiles: 'ApiUtil.java']
+            dependsOn validation
+        }
+    }
+}
