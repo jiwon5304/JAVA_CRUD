@@ -67,3 +67,14 @@ swaggerSources {
 }
 
 compileJava.dependsOn swaggerSources.javacrud.code
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["${swaggerSources.javacrud.code.outputDir}/src/main/java", 'src/main/java']
+        }
+        resources {
+            srcDirs = ["${swaggerSources.javacrud.code.outputDir}/src/main/resources", 'src/main/resources']
+        }
+    }
+}
