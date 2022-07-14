@@ -1,0 +1,17 @@
+{
+  "library": "spring-boot",
+  "dateLibrary": "java8",
+  "hideGenerationTimestamp": true,
+  "modelPackage": "com.example.api",
+  "apiPackage": "com.example.api",
+  "invokerPackage": "com.example.package",
+  "serializableModel": false,
+  "useTags": false,
+  "useGzipFeature": true,
+  "hateoas": false,
+  "withXml": false,
+  "importMappings": {
+    "Page": "org.springframework.data.domain.Page",
+    "Pageable": "org.springframework.data.domain.Pageable"
+  }
+}

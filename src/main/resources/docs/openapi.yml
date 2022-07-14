@@ -1,57 +1,55 @@
 openapi: 3.0.1
 info:
-  title: User Crud API
-  description: Hexagonal
+  title: JavaCRUD API
+  description: JavaCRUD API
   version: 1.0.0
 servers:
   - url: http://localhost:8080/v1
 tags:
-  - name: user
-    description: Operations about user
+  - name: users
+    description: "Operations about user"
+
+#    externalDocs:
+#      description: "Find out more about our store"
+#      url: "http://swagger.io"
 paths:
   /users:
     get:
       tags:
-        - user
+        - users
       summary: Get User list
-      operationId: getUsers
+      operationId: getAll
       responses:
-        '200':
+        200:
           description: successful operation
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UserResponse'
+                $ref: 'Page'
     post:
       tags:
-        - user
+        - users
       summary: Create a user
-      operationId: createUser
+      operationId: create
       requestBody:
         description: create user
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRequest'
+              $ref: '#/components/schemas/CreateUserRequestOas'
         required: true
       responses:
-        '200':
-          description: Created User
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
-        '400':
-          description: failed User
+        200:
+          description: OK
+        400:
+          description: Failed
   /users/{id}:
     get:
       tags:
-        - user
+        - users
       summary: Get user by Id
-      description: ''
-      operationId: getUserById
+      description: ""
+      operationId: getById
       parameters:
         - name: id
           description: user id
@@ -61,22 +59,18 @@ paths:
           in: path
           required: true
       responses:
-        '200':
+        200:
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
-        '400':
-          description: Invalid user supplied
-        '404':
-          description: User not found
+                $ref: '#/components/schemas/ReadUserResponseOas'
     put:
       tags:
-        - user
+        - users
       summary: Updated user
-      description: ''
-      operationId: updateUser
+      description: ""
+      operationId: update
       parameters:
         - name: id
           description: user id
@@ -90,22 +84,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRequest'
+              $ref: '#/components/schemas/UpdateUserRequestOas'
         required: true
       responses:
-        '200':
+        200:
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
-        '400':
-          description: Invalid user supplied
-        '404':
-          description: User not found
     delete:
       tags:
-        - user
+        - users
       summary: Delete user by ID
       description: For valid response try integer IDs with positive integer value.
       operationId: deleteUser
@@ -114,40 +100,52 @@ paths:
           in: path
           schema:
             type: integer
-            minimum: 1
+            minimum: 1.0
             format: int64
-          description: ID of the user that needs to be deleted
+          description: ID of the company that needs to be deleted
           required: true
       responses:
-        '200':
+        200:
           description: successful operation
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: user not found
+
 components:
   schemas:
-    UserRequest:
+    CreateUserRequestOas:
+      type: object
+      properties:
+        userName:
+          type: string
+          example: user name
+        password:
+          type: string
+          example: password1@
+        Number:
+          type: string
+          example: 010-1111-2222
+    UpdateUserRequestOas:
       type: object
       properties:
         id:
           type: integer
           format: int64
-        name:
+        userName:
           type: string
           example: user name
         password:
           type: string
-          example: password
-    UserResponse:
+          example: password1@
+        Number:
+          type: string
+          example: 010-1111-2222
+    ReadUserResponseOas:
       type: object
       properties:
         id:
           type: integer
           format: int64
-        name:
+        userName:
           type: string
           example: user name
-        password:
+        Number:
           type: string
-          example: password
+          example: 010-1111-2222
